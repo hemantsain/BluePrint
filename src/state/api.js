@@ -14,6 +14,5 @@ export const fetchListData = async (data) => {
     timeout: 30 * 1000,
   });
   const result = await response.json();
-  console.log('Result', result.hits);
   return result.hits;
 };

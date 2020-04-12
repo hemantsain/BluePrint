@@ -6,7 +6,6 @@ const initialState = {
 };
 
 function appReducer(state = initialState, action) {
-  console.log('Action', action);
   switch (action.type) {
     case ActionTypes.FETCH_LIST_REQUEST:
       return {

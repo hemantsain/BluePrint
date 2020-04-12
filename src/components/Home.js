@@ -25,7 +25,7 @@ class Home extends React.PureComponent {
         count: this.state.count + 1,
       });
       this.props.getMoreData(this.state.count);
-    }, 50000);
+    }, 10000);
   }
 
   callApi = () => {
@@ -93,7 +93,9 @@ class Home extends React.PureComponent {
           <Text>Count: {this.state.count}</Text>
           <FlatList
             data={
-              this.state.data && this.state.data.length > 0 ? this.state.data : this.props.listPostData
+              this.state.data && this.state.data.length > 0
+                ? this.state.data
+                : this.props.listPostData
             }
             renderItem={this.renderItem}
             keyExtractor={(item, index) => index.toString()}
@@ -121,7 +123,6 @@ Home.propTypes = {
   getMoreData: PropTypes.func,
 };
 const mapStateToProps = (state) => {
-  console.log('Home State', state);
   return {
     listPostData: state.appReducer.listData,
     isLoading: state.appReducer.isLoading,
