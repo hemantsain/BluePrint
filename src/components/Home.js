@@ -81,7 +81,9 @@ class Home extends Component {
         <View style={Styles.container}>
           <Text>Count: {this.state.count}</Text>
           <FlatList
-            data={this.props.listPostData}
+            data={
+              this.state.data && this.state.data.length > 0 ? this.state.data : this.props.listPostData
+            }
             renderItem={this.renderItem}
             keyExtractor={(item, index) => index.toString()}
             ListHeaderComponent={this.renderHeader}
