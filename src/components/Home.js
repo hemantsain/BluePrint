@@ -1,19 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { View, Text, FlatList } from 'react-native';
-import { SearchBar } from 'react-native-elements';
+import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { SearchBar, Overlay } from 'react-native-elements';
 import { PropTypes } from 'prop-types';
 import { fetchSearchList, fetchMoreList } from '../state/actions';
 import { Styles } from '../styles';
 import connect from 'react-redux/lib/connect/connect';
 
-class Home extends Component {
+class Home extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       count: 0,
       data: this.props.listPostData,
+      isVisible: false,
     };
+    this.selectedItem = {};
   }
 
   componentDidMount() {
@@ -37,13 +39,22 @@ class Home extends Component {
     clearInterval(this._interval);
   }
 
+  _onPress = (item) => {
+    this.selectedItem = item;
+    this.setState({
+      isVisible: true,
+    });
+  };
+
   renderItem = ({ item }) => (
-    <View style={Styles.rowContainer}>
-      <Text>Title: {item.title}</Text>
-      <Text>Url: {item.url}</Text>
-      <Text>Create At: {item.created_at}</Text>
-      <Text>Author: {item.author}</Text>
-    </View>
+    <TouchableOpacity onPress={() => this._onPress(item)}>
+      <View style={Styles.rowContainer}>
+        <Text>Title: {item.title}</Text>
+        <Text>Url: {item.url}</Text>
+        <Text>Create At: {item.created_at}</Text>
+        <Text>Author: {item.author}</Text>
+      </View>
+    </TouchableOpacity>
   );
 
   renderHeader = () => {
@@ -89,6 +100,16 @@ class Home extends Component {
             ListHeaderComponent={this.renderHeader}
             onEndReached={this.callApi}
           />
+          <Overlay
+            isVisible={this.state.isVisible}
+            onBackdropPress={() => this.setState({ isVisible: false })}>
+            <View style={Styles.modalContainer}>
+              <Text>Title: {this.selectedItem.title}</Text>
+              <Text>Url: {this.selectedItem.url}</Text>
+              <Text>Create At: {this.selectedItem.created_at}</Text>
+              <Text>Author: {this.selectedItem.author}</Text>
+            </View>
+          </Overlay>
         </View>
       </SafeAreaView>
     );

@@ -25,4 +25,9 @@ export default StyleSheet.create({
     width: '100%',
     padding: 20,
   },
+  modalContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
