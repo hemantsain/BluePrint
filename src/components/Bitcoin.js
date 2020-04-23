@@ -9,6 +9,7 @@ import connect from 'react-redux/lib/connect/connect';
 class Bitcoin extends React.PureComponent {
   constructor(props) {
     super(props);
+    console.log('Token ', this.props.route);
   }
 
   _onPress = () => {
