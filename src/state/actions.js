@@ -7,3 +7,7 @@ export const fetchSearchList = (data) => {
 export const fetchMoreList = (data) => {
   return { type: ActionTypes.FETCH_MORE_REQUEST, payload: data };
 };
+
+export const fetchBitCoinData = (data) => {
+  return { type: ActionTypes.FETCH_BITCOIN_REQUEST, payload: data };
+};

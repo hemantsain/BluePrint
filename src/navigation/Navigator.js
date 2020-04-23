@@ -4,7 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 // import Login from '../components/Login';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import Home from '../components/Home';
+// import Home from '../components/Home';
+import Bitcoin from '../components/Bitcoin';
 
 const Stack = createStackNavigator();
 
@@ -14,7 +15,8 @@ export default function Navigator() {
       <NavigationContainer>
         <Stack.Navigator>
           {/* <Stack.Screen name="Login" component={Login} /> */}
-          <Stack.Screen name="Home" component={Home} />
+          {/* <Stack.Screen name="Home" component={Home} /> */}
+          <Stack.Screen name="BitCoin" component={Bitcoin} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
