@@ -1,6 +1,14 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { View, Text, TextInput, Button, ActivityIndicator } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  ActivityIndicator,
+  Linking,
+  Platform,
+} from 'react-native';
 import { PropTypes } from 'prop-types';
 import { fetchBitCoinData } from '../state/actions';
 import { Styles } from '../styles';
@@ -9,7 +17,6 @@ import connect from 'react-redux/lib/connect/connect';
 class Bitcoin extends React.PureComponent {
   constructor(props) {
     super(props);
-    console.log('Token ', this.props.route);
   }
 
   _onPress = () => {
@@ -18,6 +25,31 @@ class Bitcoin extends React.PureComponent {
 
   _onChangeText = (text) => {
     this.token = text;
+  };
+
+  componentDidMount() {
+    if (Platform.OS === 'android') {
+      Linking.getInitialURL().then((url) => {
+        this.navigate(url);
+      });
+    } else {
+      Linking.addEventListener('url', this.handleOpenURL);
+    }
+  }
+
+  componentWillUnmount() {
+    Linking.removeEventListener('url', this.handleOpenURL);
+  }
+
+  handleOpenURL = (event) => {
+    this.navigate(event.url);
+  };
+
+  navigate = (url) => {
+    const route = url.replace(/.*?:\/\//g, '');
+    const token = route.match(/\/([^\/]+)\/?$/)[1];
+
+    this.props.getBitCoinData(token);
   };
 
   render() {

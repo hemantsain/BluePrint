@@ -30,8 +30,8 @@ export default function Navigator() {
   const { getInitialState } = useLinking(ref, {
     prefixes: ['https://bitcoin.com', 'mybitcoin://'],
     config,
-    getStateFromPath: (path, options) => {
-      console.log('Path ', path, 'options ', options);
+    getStateFromPath: (path) => {
+      console.log('Path ', path);
     },
   });
 
