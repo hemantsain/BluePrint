@@ -11,13 +11,13 @@ function bitCoinReducer(state = initialState, action) {
       return {
         ...state,
         isLoading: true,
-        bitCoinData: {},
+        bitCoinData: null,
       };
     case ActionTypes.FETCH_BITCOIN_ERROR:
       return {
         ...state,
         isLoading: false,
-        bitCoinData: {},
+        bitCoinData: null,
       };
     case ActionTypes.FETCH_BITCOIN_SUCCESS:
       return {

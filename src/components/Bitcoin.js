@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { View, Text, TextInput, Button } from 'react-native';
+import { View, Text, TextInput, Button, ActivityIndicator } from 'react-native';
 import { PropTypes } from 'prop-types';
 import { fetchBitCoinData } from '../state/actions';
 import { Styles } from '../styles';
@@ -11,23 +11,16 @@ class Bitcoin extends React.PureComponent {
     super(props);
   }
 
-  callApi = () => {
-    this.setState({
-      count: this.state.count + 1,
-    });
-    this.props.getMoreData(this.state.count);
-  };
-
   _onPress = () => {
-    console.log('Button Clicked');
+    this.props.getBitCoinData(this.token);
   };
 
   _onChangeText = (text) => {
-    console.log('Enter text ' + text);
+    this.token = text;
   };
 
   render() {
-    const { bitcoinData } = this.props;
+    const { bitcoinData, isLoading } = this.props;
     return (
       <SafeAreaView style={Styles.appContainer}>
         <View style={Styles.container}>
@@ -39,12 +32,17 @@ class Bitcoin extends React.PureComponent {
               onChangeText={this._onChangeText}
             />
             <Button title="Search" onPress={this._onPress} />
+            {isLoading && <ActivityIndicator size="large" color="#0000ff" />}
           </View>
           {bitcoinData && (
             <View style={Styles.rowContainer}>
-              <Text>Total received: {bitcoinData.total_received}</Text>
-              <Text>Total Sent: {bitcoinData.total_sent}</Text>
-              <Text>Current Balance: {bitcoinData.balance}</Text>
+              <Text>Total received: {bitcoinData.total_received} BTC</Text>
+              <Text>Total Sent: {bitcoinData.total_sent} BTC</Text>
+              <Text>Current Balance: {bitcoinData.balance} BTC</Text>
+              <Text>
+                Unconfirmed Balance: {bitcoinData.unconfirmed_balance} BTC
+              </Text>
+              <Text>Final Balance: {bitcoinData.final_balance} BTC</Text>
             </View>
           )}
         </View>
@@ -59,6 +57,7 @@ Bitcoin.propTypes = {
 const mapStateToProps = (state) => {
   return {
     bitcoinData: state.bitCoinReducer.bitCoinData,
+    isLoading: state.bitCoinReducer.isLoading,
   };
 };
 const mapDispatchToProps = (dispatch) => ({

@@ -1,7 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { ActionTypes } from './action-types';
-import { fetchListData } from './api';
-import { fetchBitCoinData } from './actions';
+import { fetchListData, fetchBitCoinData } from './api';
 
 function* getSearchListSaga(action) {
   try {

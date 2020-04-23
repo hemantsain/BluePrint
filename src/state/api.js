@@ -25,5 +25,5 @@ export const fetchBitCoinData = async (token) => {
     timeout: 30 * 1000,
   });
   const result = await response.json();
-  return result.hits;
+  return result;
 };
